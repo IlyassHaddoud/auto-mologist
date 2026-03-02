@@ -75,7 +75,7 @@ export function Header() {
 
         {/* Actions */}
         <div className="flex items-center gap-2 md:gap-4">
-          <Link href="/admin">
+          <Link href="/login">
             <Button variant="ghost" size="sm" className="hidden md:flex text-xs uppercase tracking-widest text-muted-foreground hover:text-primary">
               Admin
             </Button>

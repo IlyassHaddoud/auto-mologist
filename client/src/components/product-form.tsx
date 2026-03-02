@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertProductSchema, type Product } from "@shared/schema";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -37,7 +37,7 @@ export function ProductForm({ product, open, onOpenChange }: ProductFormProps) {
 
   const form = useForm({
     resolver: zodResolver(insertProductSchema),
-    defaultValues: product || {
+    defaultValues: {
       name: "",
       description: "",
       price: 0,
@@ -48,6 +48,34 @@ export function ProductForm({ product, open, onOpenChange }: ProductFormProps) {
       isNew: false,
     },
   });
+
+  useEffect(() => {
+    if (open) {
+      if (product) {
+        form.reset({
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          imageUrl: product.imageUrl,
+          category: product.category,
+          brand: product.brand,
+          isBestSeller: product.isBestSeller,
+          isNew: product.isNew,
+        });
+      } else {
+        form.reset({
+          name: "",
+          description: "",
+          price: 0,
+          imageUrl: "",
+          category: "",
+          brand: "",
+          isBestSeller: false,
+          isNew: false,
+        });
+      }
+    }
+  }, [open, product, form]);
 
   const mutation = useMutation({
     mutationFn: async (values: any) => {

@@ -9,11 +9,14 @@ import Collections from "@/pages/collections";
 import ProductDetail from "@/pages/product-detail";
 import Checkout from "@/pages/checkout";
 import AdminDashboard from "@/pages/admin/dashboard";
+import Login from "@/pages/login";
+
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/checkout" component={Checkout} />
+      <Route path="/login" component={Login} />
       <Route path="/admin" component={AdminDashboard} />
       {/* Route for product details */}
       <Route path="/product/:id" component={ProductDetail} />
