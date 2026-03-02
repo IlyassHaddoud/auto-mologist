@@ -22,7 +22,7 @@ export default function Home() {
           <div className="absolute inset-0">
             {/* Scenic mountain road with classic car vibe */}
             <img
-              src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?q=80&w=2574&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1762803942915-033c7f0ea82b?q=80&w=1761&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="Classic car on scenic road"
               className="h-full w-full object-cover opacity-60"
             />
@@ -170,7 +170,7 @@ export default function Home() {
         {/* Newsletter */}
         <section className="py-24 bg-secondary/30">
           <div className="container mx-auto px-4 text-center max-w-2xl space-y-8">
-            <h2 className="font-display text-3xl font-bold">Join "The Automologist" Community</h2>
+            <h2 className="font-display text-3xl font-bold">Join "The Autovault" Community</h2>
             <p className="text-muted-foreground">
               Be the first to hear about our participation in key automotive events, new products, limited editions & promotions.
             </p>

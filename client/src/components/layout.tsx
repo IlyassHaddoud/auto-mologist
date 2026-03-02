@@ -35,7 +35,7 @@ export function Header() {
           </SheetTrigger>
           <SheetContent side="left" className="w-[300px]">
             <SheetHeader>
-              <SheetTitle className="font-display text-2xl text-left">The Automologist</SheetTitle>
+              <SheetTitle className="font-display text-2xl text-left">The Autovault</SheetTitle>
             </SheetHeader>
             <nav className="flex flex-col gap-4 mt-8">
               {navLinks.map((link) => (
@@ -53,7 +53,7 @@ export function Header() {
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
           <h1 className="font-display text-2xl md:text-3xl font-bold tracking-tight cursor-pointer hover:opacity-80 transition-opacity">
-            The Automologist
+            The Autovault
           </h1>
         </Link>
 
@@ -194,7 +194,7 @@ export function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="col-span-1 md:col-span-2 space-y-6">
-            <h2 className="font-display text-3xl font-bold">The Automologist</h2>
+            <h2 className="font-display text-3xl font-bold">The Autovault</h2>
             <p className="text-primary-foreground/70 max-w-sm leading-relaxed">
               Pionnier de la maquette encadrée, aujourd'hui encadreur des plus grandes collections automobiles autour du monde.
               Une quête perpétuelle du beau, du style & de l'élégance automobile.
@@ -238,7 +238,7 @@ export function Footer() {
         <Separator className="bg-white/10 mb-8" />
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-primary-foreground/50">
-          <p>&copy; {new Date().getFullYear()} The Automologist. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} The Autovault. All rights reserved.</p>
           <p>Designed with passion for automotive art.</p>
         </div>
       </div>
