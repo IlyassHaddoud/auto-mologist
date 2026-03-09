@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { ShoppingBag, Menu, X, Search, Instagram, Facebook, Youtube } from "lucide-react";
+import { ShoppingBag, Menu, X, Search, Instagram, Facebook, Youtube, LogOut } from "lucide-react";
 import { useCart } from "@/hooks/use-cart";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -8,11 +8,15 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/use-auth";
+
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { items, toggleCart, isOpen: isCartOpen } = useCart();
   const [location] = useLocation();
+  const { isAuthenticated, logout } = useAuth();
+  const [, setLocation] = useLocation();
 
   const cartCount = items.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -75,11 +79,25 @@ export function Header() {
 
         {/* Actions */}
         <div className="flex items-center gap-2 md:gap-4">
-          <Link href="/login">
-            <Button variant="ghost" size="sm" className="hidden md:flex text-xs uppercase tracking-widest text-muted-foreground hover:text-primary">
-              Admin
+          {isAuthenticated() ? (
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => {
+                logout();
+                setLocation("/login");
+              }}
+              className="hidden md:flex text-xs uppercase tracking-widest text-muted-foreground hover:text-primary"
+            >
+              <LogOut className="h-4 w-4 mr-1" /> Logout
             </Button>
-          </Link>
+          ) : (
+            <Link href="/login">
+              <Button variant="ghost" size="sm" className="hidden md:flex text-xs uppercase tracking-widest text-muted-foreground hover:text-primary">
+                Login
+              </Button>
+            </Link>
+          )}
           <Button variant="ghost" size="icon" className="hidden sm:flex">
             <Search className="h-5 w-5" />
           </Button>

@@ -117,5 +117,24 @@ export async function registerRoutes(
     res.status(204).end();
   });
 
+  // Auth Routes
+  const ADMIN_EMAIL = "admin@theautomologist.com";
+  const ADMIN_PASSWORD = "password123";
+
+  app.post("/api/auth/login", (req, res) => {
+    const { email, password } = req.body;
+    
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+      const token = Buffer.from(`${email}:${Date.now()}`).toString('base64');
+      res.json({ token });
+    } else {
+      res.status(401).json({ message: "Invalid email or password" });
+    }
+  });
+
+  app.post("/api/auth/logout", (req, res) => {
+    res.json({ message: "Logged out successfully" });
+  });
+
   return httpServer;
 }

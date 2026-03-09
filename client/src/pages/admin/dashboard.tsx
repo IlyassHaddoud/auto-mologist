@@ -1,6 +1,8 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { OrderWithItems, Product } from "@shared/schema";
 import { queryClient, apiRequest } from "@/lib/queryClient";
+import { useAuth } from "@/hooks/use-auth";
+import { useLocation } from "wouter";
 import { Header, Footer } from "@/components/layout";
 import {
   Table,
@@ -20,15 +22,36 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader2, Plus, Trash2, Edit } from "lucide-react";
+import { Loader2, Plus, Trash2, Edit, Eye, LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ProductForm } from "@/components/product-form";
+import { OrderDetailsDialog } from "@/components/order-details-dialog";
 
 export default function AdminDashboard() {
   const { toast } = useToast();
+  const { isAuthenticated, logout } = useAuth();
+  const [, setLocation] = useLocation();
   const [editingProduct, setEditingProduct] = useState<Product | undefined>();
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<OrderWithItems | null>(null);
+  const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false);
+
+  useEffect(() => {
+    // Check authentication status with a slight delay to allow state updates
+    const timer = setTimeout(() => {
+      if (!isAuthenticated()) {
+        setLocation("/login");
+      }
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [isAuthenticated, setLocation]);
+  
+  const handleLogout = () => {
+    logout();
+    toast({ title: "Logged out successfully" });
+    setLocation("/login");
+  };
   
   const { data: orders, isLoading: loadingOrders } = useQuery<OrderWithItems[]>({
     queryKey: ["/api/admin/orders"],
@@ -65,8 +88,9 @@ export default function AdminDashboard() {
         <div className="flex items-center justify-center min-h-screen">
           <Loader2 className="h-8 w-8 animate-spin" />
         </div>
-      <Footer/>
+            <Footer/>
     </div>
+
     );
   }
 
@@ -74,7 +98,17 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-background flex flex-col">
       <Header/>
       <div className="container mx-auto px-4 py-12">
-        <h1 className="text-3xl font-serif mb-8 text-primary">Admin Dashboard</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-serif text-primary">Admin Dashboard</h1>
+          <Button 
+            variant="destructive" 
+            size="sm"
+            onClick={handleLogout}
+            data-testid="button-logout"
+          >
+            <LogOut className="h-4 w-4 mr-2" /> Logout
+          </Button>
+        </div>
         
         <Tabs defaultValue="orders">
           <TabsList className="mb-8">
@@ -124,7 +158,17 @@ export default function AdminDashboard() {
                           </Select>
                         </TableCell>
                         <TableCell>
-                           {/* Details could go here */}
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => {
+                              setSelectedOrder(order);
+                              setIsOrderDetailsOpen(true);
+                            }}
+                            data-testid="button-view-order-details"
+                          >
+                            <Eye className="h-4 w-4 mr-1" /> Details
+                          </Button>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -198,6 +242,12 @@ export default function AdminDashboard() {
           product={editingProduct} 
           open={isFormOpen} 
           onOpenChange={setIsFormOpen} 
+        />
+        
+        <OrderDetailsDialog 
+          order={selectedOrder}
+          open={isOrderDetailsOpen}
+          onOpenChange={setIsOrderDetailsOpen}
         />
       </div>
     <Footer/>

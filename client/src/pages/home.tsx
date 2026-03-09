@@ -63,7 +63,7 @@ export default function Home() {
               transition={{ delay: 0.8 }}
               className="flex flex-col sm:flex-row gap-4"
             >
-              <Link href="/collections/classic-icons">
+              <Link href="/collections/Elite">
                 <Button size="lg" className="h-14 px-8 text-base bg-white text-black hover:bg-white/90">
                   Explore Collections
                 </Button>
@@ -84,7 +84,7 @@ export default function Home() {
               <span className="text-sm uppercase tracking-widest text-muted-foreground font-semibold">Curated Selection</span>
               <h2 className="font-display text-4xl font-bold">Our Best Sellers</h2>
             </div>
-            <Link href="/collections/best-sellers">
+            <Link href="/collections/Collections">
               <Button variant="ghost" className="group text-lg">
                 View All <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
