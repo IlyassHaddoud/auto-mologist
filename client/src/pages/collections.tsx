@@ -25,11 +25,11 @@ export default function Collections({ category: propCategory, brand: propBrand }
   // The route pattern in App.tsx will handle passing props
   
   const [sortBy, setSortBy] = useState("featured");
-  
   const { data: products, isLoading } = useProducts({ 
     category: propCategory, 
     brand: propBrand 
   });
+  console.log("category"+propCategory)
 
   const title = propCategory || propBrand || "All Collections";
 
